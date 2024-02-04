@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'tailwind',
+    'theme',
+    'account',
 ]
 
 MIDDLEWARE = [
@@ -73,12 +76,30 @@ WSGI_APPLICATION = 'elearning.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'elearningdb',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3306',
+        'OPTIONS': {
+            'init_command': "SET default_storage_engine=INNODB",
+            'sql_mode': 'STRICT_TRANS_TABLES',
+        },
+
     }
 }
+
+SESSION_SAVE_EVERY_REQUEST = True
 
 
 # Password validation
@@ -116,9 +137,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
-MEDIA_URL = 'images/'
+# MEDIA_URL = 'video/'
+
+# MEDIA_URL = 'medias/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
+]
+
+TAILWIND_APP_NAME = 'theme'
+NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"
+INTERNAL_IPS = [
+    "127.0.0.1"
 ]
 
 # Default primary key field type

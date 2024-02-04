@@ -28,6 +28,13 @@ def formations_view(request):
     return render(request, 'layouts/menu/formations.html', context)
 
 
+# ? PlayList Formations 
+def playslist_formations_view(request):
+    current_view_name = request.resolver_match.url_name
+    context = {'title': 'Mes Formations', 'current_view_name': current_view_name}
+    return render(request, 'layouts/menu/playlist_formations.html', context)
+
+
 # ? Blog
 def blog_view(request):
     current_view_name = request.resolver_match.url_name
@@ -42,15 +49,4 @@ def contact_view(request):
     return render(request, 'layouts/menu/contact.html', context)
 
 
-# ? Connexion
-def connexion_view(request):
-    current_view_name = request.resolver_match.url_name
-    context = {'title': 'Connexion', 'current_view_name': current_view_name}
-    return render(request, 'layouts/auth/connexion.html', context)
 
-
-# ? inscription
-def inscription_view(request):
-    current_view_name = request.resolver_match.url_name
-    context = {'title': 'inscription', 'current_view_name': current_view_name}
-    return render(request, 'layouts/auth/inscription.html', context)

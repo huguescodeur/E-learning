@@ -1,2 +1,2 @@
 // ? Pagination
-console.log("Je suis une pagination");
+alert("Please select");

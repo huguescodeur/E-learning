@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div id="div-img-intro" class=" flex items-center justify-center mt-8 lg:mt-0 h-72  lg:h-96 ">
-                <img src="{% static 'images/intro-left-img.png' %}" alt=""
+                <img src="{% static 'medias/images/intro-left-img.png' %}" alt=""
                     class="object-contain h-72 sm:h-80 lg:h-96 xl:h-112 2xl:h-128">
             </div>
         </div>
@@ -78,7 +78,7 @@
                                             <div class="flex items-center">
                                                 <div class="flex-shrink-0">
                                                     <img class="w-8 h-8 rounded-full"
-                                                        src="{% static 'images/react.svg' %}" alt="React Logo">
+                                                        src="{% static 'medias/images/react.svg' %}" alt="React Logo">
                                                 </div>
                                                 <div class="flex-1 min-w-0 ms-4">
                                                     <p
@@ -99,7 +99,7 @@
                                             <div class="flex items-center ">
                                                 <div class="flex-shrink-0">
                                                     <img class="w-8 h-8 rounded-full"
-                                                        src="{% static 'images/django.svg' %}" alt="Django Logo">
+                                                        src="{% static 'medias/images/django.svg' %}" alt="Django Logo">
                                                 </div>
                                                 <div class="flex-1 min-w-0 ms-4">
                                                     <p
@@ -120,7 +120,7 @@
                                             <div class="flex items-center">
                                                 <div class="flex-shrink-0">
                                                     <img class="w-8 h-8 rounded-full"
-                                                        src="{% static 'images/flutter.svg' %}" alt="Michael image">
+                                                        src="{% static 'medias/images/flutter.svg' %}" alt="Michael image">
                                                 </div>
                                                 <div class="flex-1 min-w-0 ms-4">
                                                     <p
@@ -141,7 +141,7 @@
                                             <div class="flex items-center ">
                                                 <div class="flex-shrink-0">
                                                     <img class="w-8 h-8 rounded-full"
-                                                        src="{% static 'images/python.svg' %}" alt="Lana image">
+                                                        src="{% static 'medias/images/python.svg' %}" alt="Lana image">
                                                 </div>
                                                 <div class="flex-1 min-w-0 ms-4">
                                                     <p
@@ -192,7 +192,7 @@
                                                 <div class="flex items-center">
                                                     <div class="flex-shrink-0">
                                                         <img class="w-8 h-8 rounded-full"
-                                                            src="{% static 'images/flask.svg' %}" alt="Flask Logo">
+                                                            src="{% static 'medias/images/flask.svg' %}" alt="Flask Logo">
                                                     </div>
                                                     <div class="flex-1 min-w-0 ms-4">
                                                         <p
@@ -213,7 +213,7 @@
                                                 <div class="flex items-center ">
                                                     <div class="flex-shrink-0">
                                                         <img class="w-8 h-8 rounded-full"
-                                                            src="{% static 'images/python.svg' %}" alt="Python Logo">
+                                                            src="{% static 'medias/images/python.svg' %}" alt="Python Logo">
                                                     </div>
                                                     <div class="flex-1 min-w-0 ms-4">
                                                         <p
@@ -234,7 +234,7 @@
                                                 <div class="flex items-center">
                                                     <div class="flex-shrink-0">
                                                         <img class="w-8 h-8 rounded-full"
-                                                            src="{% static 'images/dart.svg' %}" alt="Dart Logo">
+                                                            src="{% static 'medias/images/dart.svg' %}" alt="Dart Logo">
                                                     </div>
                                                     <div class="flex-1 min-w-0 ms-4">
                                                         <p
@@ -255,7 +255,7 @@
                                                 <div class="flex items-center ">
                                                     <div class="flex-shrink-0">
                                                         <img class="w-8 h-8 rounded-full"
-                                                            src="{% static 'images/react.svg' %}" alt="React Logo">
+                                                            src="{% static 'medias/images/react.svg' %}" alt="React Logo">
                                                     </div>
                                                     <div class="flex-1 min-w-0 ms-4">
                                                         <p
@@ -658,31 +658,31 @@
 
         </div>
 
-       
 
-            <script>
-                const setup = () => {
-                    return {
-                        isNavOpen: false,
 
-                        billPlan: 'monthly',
+        <script>
+            const setup = () => {
+                return {
+                    isNavOpen: false,
 
-                        plans: [
+                    billPlan: 'monthly',
 
-                            {
-                                name: 'Devenir premium (1 mois)',
-                                discretion: 'Better for growing businesses that want more customers.',
-                                price: {
-                                    monthly: 5,
-                                    annually: 50,
-                                },
-                                features: ['Two projects', 'Your dashboard', 'Components included', 'Advanced charts'],
+                    plans: [
+
+                        {
+                            name: 'Devenir premium (1 mois)',
+                            discretion: 'Better for growing businesses that want more customers.',
+                            price: {
+                                monthly: 5,
+                                annually: 50,
                             },
+                            features: ['Two projects', 'Your dashboard', 'Components included', 'Advanced charts'],
+                        },
 
-                        ],
-                    }
+                    ],
                 }
-            </script>
+            }
+        </script>
 
 
-            {% endblock %}
+        {% endblock %}
