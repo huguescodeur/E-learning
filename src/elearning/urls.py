@@ -20,13 +20,17 @@ from . import views
 from account.views import connexion_view
 from account.views import inscription_view
 from account.views import logout_view
+from django.conf import settings
+from django.conf.urls.static import static
+from videos.views import formations_view
+from videos.views import playslist_formations_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index_view, name="accueil"),
     path('tutoriels/', views.tutoriels_view, name="tutoriels"),
-    path('formations/', views.formations_view, name="formations"),
-    path('formations/playlist', views.playslist_formations_view,
+    path('formations/', formations_view, name="formations"),
+    path('formations/playlist', playslist_formations_view,
          name="mes_formations"),
     path('blog/', views.blog_view, name="blog"),
     path('contact/', views.contact_view, name="contact"),
@@ -35,3 +39,7 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),
    
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

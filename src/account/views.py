@@ -9,7 +9,6 @@ from django.contrib.auth import logout
 from django.utils import timezone
 
 
-
 # Logique du décirateur
 def custom_login_required(f):
     @wraps(f)
@@ -45,7 +44,7 @@ def connexion_view(request):
                 cursor.execute(
                     """UPDATE account_user
                     SET last_login = %s WHERE email = %s""", [timezone.now(), email])
-            return redirect("inscription")
+            return redirect("accueil")
 
         else:
             messages.error(request, "Email ou mot de passe incorrect")
@@ -54,12 +53,12 @@ def connexion_view(request):
     else:
         current_view_name = request.resolver_match.url_name
         context = {'title': 'Connexion',
-                   'current_view_name': current_view_name,}
+                   'current_view_name': current_view_name, }
         return render(request, 'connexion.html', context)
 
 
 # ? Gestion Back-End inscription
-@custom_login_required
+# @custom_login_required
 def inscription_view(request):
     if request.method == 'POST':
 
@@ -68,6 +67,8 @@ def inscription_view(request):
         password = request.POST.get('password')
         confirmpassword = request.POST.get('confirmpassword')
         role = request.POST.get('role', 'apprenant')
+
+        default_image = 'images/default.jpg'
 
         # ? Password pareil??
         if password != confirmpassword:
@@ -90,10 +91,12 @@ def inscription_view(request):
         with connection.cursor() as cursor:
             cursor.execute(
                 """INSERT INTO account_user
-                (username, email, password, role, nom, date_joined, first_name, last_name, is_staff, is_active, is_superuser, last_login)
+                (username, email, password, role, nom, date_joined, first_name, last_name, 
+                is_staff, is_active, is_superuser, last_login, image)
                 VALUES
-                (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
-                [nom, email, hashed_password, role, nom, timezone.now(), nom, nom, False, True, False, timezone.now()])
+                (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+                [nom, email, hashed_password, role, nom, timezone.now(), nom, nom, False, True, False,
+                 timezone.now(), default_image])
 
             # Récupérez l'ID du nouvel utilisateur
             cursor.execute(
@@ -110,10 +113,10 @@ def inscription_view(request):
         messages.success(request, "Inscription réussie!")
 
         request.session['user_id'] = user_id
-        return redirect('connexion')
+        return redirect('accueil')
 
     else:
         current_view_name = request.resolver_match.url_name
         context = {'title': 'inscription',
-                   'current_view_name': current_view_name,}
+                   'current_view_name': current_view_name, }
         return render(request, 'inscription.html', context)

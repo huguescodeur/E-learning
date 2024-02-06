@@ -1,5 +1,8 @@
+from datetime import timezone
+
 from django.contrib.auth.models import User, AbstractUser, Group, Permission
 from django.db import models
+
 
 # Create your models here.
 
@@ -13,7 +16,8 @@ class User(AbstractUser):
 
     role = models.CharField(max_length=20, choices=ROLE_CHOICES)
     nom = models.CharField(max_length=50)
-
+    image = models.ImageField(upload_to='account/static/images/user_profil/',
+                              default='account/static/images/user_profil/default_image.png')
 
     groups = models.ManyToManyField(
         Group, verbose_name='groups', blank=True, related_name='user_groups')
@@ -26,6 +30,7 @@ class Apprenant(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     nom_apprenant = models.CharField(max_length=50)
     is_premium = models.BooleanField(default=False)
+
 
 # ? Class Formateur
 

@@ -1,6 +1,6 @@
-{% extends 'partials/base_logout.html' %}
+{% extends 'partials/base.html' %}
 {% load static %}
-{% block body %}
+{% block body %}    
 <div class="mt-70 section-intro">
     <section class="  text-slate-950 px-12 pt-40">
         <div class="relative flex flex-col justify-center mx-auto sm:py-12 lg:py-6 lg:flex-row lg:justify-between">
@@ -16,9 +16,14 @@
                 </p>
                 <div
                     class="flex flex-col space-y-4 sm:items-center sm:justify-center sm:flex-row sm:space-y-0 sm:space-x-4 lg:justify-start">
-                    <a rel="noopener noreferrer" href="{% url 'tutoriels' %}"
-                        class="px-3 py-4 text-lg font-semibold rounded bg-blue-500 text-white hover:bg-blue-600">Créer
-                        votre compte</a>
+                    {% if user %}
+                        <a rel="noopener noreferrer" href="{% url 'formations' %}"
+                            class="px-3 py-4 text-lg font-semibold rounded bg-blue-500 text-white hover:bg-blue-600">Voir les formations</a>
+                    {% else %}
+                        <a rel="noopener noreferrer" href="{% url 'inscription' %}"
+                            class="px-3 py-4 text-lg font-semibold rounded bg-blue-500 text-white hover:bg-blue-600">Créer
+                            votre compte</a>
+                    {% endif %}
                     <a rel="noopener noreferrer" href="{% url 'tutoriels' %}"
                         class="px-3 py-4 text-lg font-semibold border rounded  text-blue-500 dark:border-blue-500 hover:bg-blue-600 hover:text-white">Voir
                         les
