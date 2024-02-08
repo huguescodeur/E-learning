@@ -26,7 +26,7 @@
         <li class="{% if current_view_name == 'accueil' %}active{% endif %}"><a
                 class="text-sm text-gray-400 hover:text-gray-500  " href="{% url 'accueil' %}">Accueil</a></li>
 
-        <li class="{% if current_view_name == 'tutoriels' %}active{% endif %}"><a
+        <li class="{% if current_view_name == 'tutoriels' or current_view_name == 'mes_tutoriels' %}active{% endif %}"><a
                 class="text-sm text-gray-400 hover:text-gray-500" href="{% url 'tutoriels' %}">Tutoriels</a></li>
 
         <li

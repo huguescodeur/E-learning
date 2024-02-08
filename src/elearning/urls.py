@@ -17,27 +17,29 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from . import views
-from account.views import connexion_view
-from account.views import inscription_view
-from account.views import logout_view
+from account.views import connexion_view, inscription_view, logout_view
 from django.conf import settings
 from django.conf.urls.static import static
-from videos.views import formations_view
-from videos.views import playslist_formations_view
+from videos.views import formations_view, playlist_formations_view, tutoriels_view, playlist_tutorial_view, search_suggestions_formations
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index_view, name="accueil"),
-    path('tutoriels/', views.tutoriels_view, name="tutoriels"),
+    path('tutoriels/', tutoriels_view, name="tutoriels"),
     path('formations/', formations_view, name="formations"),
-    path('formations/playlist', playslist_formations_view,
+    path('formations/playlist/<str:course>/', playlist_formations_view,
          name="mes_formations"),
+    path('tutoriels/playlist/<str:course>/', playlist_tutorial_view,
+         name="mes_tutoriels"),
+    path('formations/search_suggestions_formations/', search_suggestions_formations,
+         name='search_formations'),
+
     path('blog/', views.blog_view, name="blog"),
     path('contact/', views.contact_view, name="contact"),
     path('connexion/', connexion_view, name="connexion"),
     path('inscription/', inscription_view, name="inscription"),
     path('logout/', logout_view, name='logout'),
-   
+
 ]
 
 if settings.DEBUG:

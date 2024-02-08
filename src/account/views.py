@@ -68,7 +68,7 @@ def inscription_view(request):
         confirmpassword = request.POST.get('confirmpassword')
         role = request.POST.get('role', 'apprenant')
 
-        default_image = 'images/default.jpg'
+        # default_image = 'account/static/images/default.jpg'
 
         # ? Password pareil??
         if password != confirmpassword:
@@ -92,11 +92,11 @@ def inscription_view(request):
             cursor.execute(
                 """INSERT INTO account_user
                 (username, email, password, role, nom, date_joined, first_name, last_name, 
-                is_staff, is_active, is_superuser, last_login, image)
+                is_staff, is_active, is_superuser, last_login)
                 VALUES
                 (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
                 [nom, email, hashed_password, role, nom, timezone.now(), nom, nom, False, True, False,
-                 timezone.now(), default_image])
+                 timezone.now()])
 
             # Récupérez l'ID du nouvel utilisateur
             cursor.execute(

@@ -1,6 +1,6 @@
 {% extends 'partials/base.html' %}
 {% load static %}
-{% block body %}    
+{% block body %}
 <div class="mt-70 section-intro">
     <section class="  text-slate-950 px-12 pt-40">
         <div class="relative flex flex-col justify-center mx-auto sm:py-12 lg:py-6 lg:flex-row lg:justify-between">
@@ -17,12 +17,13 @@
                 <div
                     class="flex flex-col space-y-4 sm:items-center sm:justify-center sm:flex-row sm:space-y-0 sm:space-x-4 lg:justify-start">
                     {% if user %}
-                        <a rel="noopener noreferrer" href="{% url 'formations' %}"
-                            class="px-3 py-4 text-lg font-semibold rounded bg-blue-500 text-white hover:bg-blue-600">Voir les formations</a>
+                    <a rel="noopener noreferrer" href="{% url 'formations' %}"
+                        class="px-3 py-4 text-lg font-semibold rounded bg-blue-500 text-white hover:bg-blue-600">Voir
+                        les formations</a>
                     {% else %}
-                        <a rel="noopener noreferrer" href="{% url 'inscription' %}"
-                            class="px-3 py-4 text-lg font-semibold rounded bg-blue-500 text-white hover:bg-blue-600">Créer
-                            votre compte</a>
+                    <a rel="noopener noreferrer" href="{% url 'inscription' %}"
+                        class="px-3 py-4 text-lg font-semibold rounded bg-blue-500 text-white hover:bg-blue-600">Créer
+                        votre compte</a>
                     {% endif %}
                     <a rel="noopener noreferrer" href="{% url 'tutoriels' %}"
                         class="px-3 py-4 text-lg font-semibold border rounded  text-blue-500 dark:border-blue-500 hover:bg-blue-600 hover:text-white">Voir
@@ -72,98 +73,38 @@
                                         dernières
                                         formations
                                     </h5>
-                                    <a href="#"
+                                    <a href="{% url 'formations' %}"
                                         class="text-sm font-medium text-blue-500 hover:text-blue-600 white:text-blue-500">
                                         Voir tous
                                     </a>
                                 </div>
                                 <div class="flow-root ">
                                     <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-300">
-                                        <li class="py-3 sm:py-4">
-                                            <div class="flex items-center">
-                                                <div class="flex-shrink-0">
-                                                    <img class="w-8 h-8 rounded-full"
-                                                        src="{% static 'medias/images/react.svg' %}" alt="React Logo">
-                                                </div>
-                                                <div class="flex-1 min-w-0 ms-4">
-                                                    <p
-                                                        class="text-sm font-medium text-gray-900 truncate white:text-black">
-                                                        <a href="#">Apprendre React</a>
-                                                    </p>
-                                                    <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                                                        30 Chapitres
-                                                    </p>
-                                                </div>
-                                                <!-- <div
-                                                                        class="inline-flex items-center text-base font-semibold text-blue-500 ">
-                                                                        <a href="#">Voir</a>
-                                                                    </div> -->
-                                            </div>
-                                        </li>
-                                        <li class="py-3 sm:py-4">
-                                            <div class="flex items-center ">
-                                                <div class="flex-shrink-0">
-                                                    <img class="w-8 h-8 rounded-full"
-                                                        src="{% static 'medias/images/django.svg' %}" alt="Django Logo">
-                                                </div>
-                                                <div class="flex-1 min-w-0 ms-4">
-                                                    <p
-                                                        class="text-sm font-medium text-gray-900 truncate  white:text-black">
-                                                        <a href="#">Découverte de Django</a>
-                                                    </p>
-                                                    <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                                                        30 Chapitres
-                                                    </p>
-                                                </div>
-                                                <!-- <div
-                                                                        class="inline-flex items-center text-base font-semibold text-blue-500 ">
-                                                                        <a href="#">Voir</a>
-                                                                    </div> -->
-                                            </div>
-                                        </li>
-                                        <li class="py-3 sm:py-4">
-                                            <div class="flex items-center">
-                                                <div class="flex-shrink-0">
-                                                    <img class="w-8 h-8 rounded-full"
-                                                        src="{% static 'medias/images/flutter.svg' %}" alt="Michael image">
-                                                </div>
-                                                <div class="flex-1 min-w-0 ms-4">
-                                                    <p
-                                                        class="text-sm font-medium text-gray-900 truncate white:text-black">
-                                                        <a href="#">La magie de Flutter</a>
-                                                    </p>
-                                                    <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                                                        30 Chapitres
-                                                    </p>
-                                                </div>
-                                                <!-- <div
-                                                                        class="inline-flex items-center text-base font-semibold text-blue-500 ">
-                                                                        <a href="#">Voir</a>
-                                                                    </div> -->
-                                            </div>
-                                        </li>
-                                        <li class="py-3 sm:py-4">
-                                            <div class="flex items-center ">
-                                                <div class="flex-shrink-0">
-                                                    <img class="w-8 h-8 rounded-full"
-                                                        src="{% static 'medias/images/python.svg' %}" alt="Lana image">
-                                                </div>
-                                                <div class="flex-1 min-w-0 ms-4">
-                                                    <p
-                                                        class="text-sm font-medium text-gray-900 truncate  white:text-black">
-                                                        <a href="#">Apprendre Python</a>
-                                                    </p>
-                                                    <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                                                        30 Chapitres
-                                                    </p>
-                                                </div>
-                                                <!-- <div
-                                                                        class="inline-flex items-center text-base font-semibold text-blue-500 ">
-                                                                        <a href="#">Voir</a>
-                                                                    </div> -->
-                                            </div>
-                                        </li>
 
+                                        {% for formation in all_formation %}
+                                        <li class="py-3 sm:py-4">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0">
+                                                    <img class="w-8 h-8 rounded-full" src="{% static formation.2  %}"
+                                                        alt="Logo">
+                                                </div>
+                                                <div class="flex-1 min-w-0 ms-4">
+                                                    <p
+                                                        class="text-sm font-medium text-gray-900 truncate white:text-black">
+                                                        <a href="{% url 'mes_formations' formation.0 %}">
+                                                            {{formation.0}} </a>
+                                                    </p>
+                                                    <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                                        {{formation.5}} Chapitres
+                                                    </p>
+                                                </div>
+                                                <!-- <div
+                                                                                                                    class="inline-flex items-center text-base font-semibold text-blue-500 ">
+                                                                                                                    <a href="#">Voir</a>
+                                                                                                                </div> -->
+                                            </div>
+                                        </li>
+                                        {% endfor %}
 
                                     </ul>
                                 </div>
@@ -186,98 +127,37 @@
                                             derniers
                                             tutoriels
                                         </h5>
-                                        <a href="#"
+                                        <a href="{% url 'tutoriels'%}"
                                             class="text-sm font-medium text-blue-500 hover:text-blue-600 white:text-blue-500">
                                             Voir tous
                                         </a>
                                     </div>
                                     <div class="flow-root ">
                                         <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-300">
+                                            {% for tutorial in all_tutorial %}
                                             <li class="py-3 sm:py-4">
                                                 <div class="flex items-center">
                                                     <div class="flex-shrink-0">
-                                                        <img class="w-8 h-8 rounded-full"
-                                                            src="{% static 'medias/images/flask.svg' %}" alt="Flask Logo">
+                                                        <img class="w-8 h-8 rounded-full" src="{% static tutorial.2  %}"
+                                                            alt="Logo">
                                                     </div>
                                                     <div class="flex-1 min-w-0 ms-4">
                                                         <p
                                                             class="text-sm font-medium text-gray-900 truncate white:text-black">
-                                                            <a href="#">Authentication avec Flask</a>
+                                                            <a href="{% url 'mes_tutoriels' tutorial.5 %}">
+                                                                {{tutorial.0}} </a>
                                                         </p>
                                                         <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                                                            15 min
+                                                            {{tutorial.3}}
                                                         </p>
                                                     </div>
                                                     <!-- <div
-                                                                            class="inline-flex items-center text-base font-semibold text-blue-500 ">
-                                                                            <a href="#">Voir</a>
-                                                                        </div> -->
+                                                                                                                            class="inline-flex items-center text-base font-semibold text-blue-500 ">
+                                                                                                                            <a href="#">Voir</a>
+                                                                                                                        </div> -->
                                                 </div>
                                             </li>
-                                            <li class="py-3 sm:py-4">
-                                                <div class="flex items-center ">
-                                                    <div class="flex-shrink-0">
-                                                        <img class="w-8 h-8 rounded-full"
-                                                            src="{% static 'medias/images/python.svg' %}" alt="Python Logo">
-                                                    </div>
-                                                    <div class="flex-1 min-w-0 ms-4">
-                                                        <p
-                                                            class="text-sm font-medium text-gray-900 truncate  white:text-black">
-                                                            <a href="#">List Comprehension en Python</a>
-                                                        </p>
-                                                        <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                                                            8 min
-                                                        </p>
-                                                    </div>
-                                                    <!-- <div
-                                                                            class="inline-flex items-center text-base font-semibold text-blue-500 ">
-                                                                            <a href="#">Voir</a>
-                                                                        </div> -->
-                                                </div>
-                                            </li>
-                                            <li class="py-3 sm:py-4">
-                                                <div class="flex items-center">
-                                                    <div class="flex-shrink-0">
-                                                        <img class="w-8 h-8 rounded-full"
-                                                            src="{% static 'medias/images/dart.svg' %}" alt="Dart Logo">
-                                                    </div>
-                                                    <div class="flex-1 min-w-0 ms-4">
-                                                        <p
-                                                            class="text-sm font-medium text-gray-900 truncate white:text-black">
-                                                            <a href="#">Comprendre la POO en DART</a>
-                                                        </p>
-                                                        <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                                                            15 min
-                                                        </p>
-                                                    </div>
-                                                    <!-- <div
-                                                                            class="inline-flex items-center text-base font-semibold text-blue-500 ">
-                                                                            <a href="#">Voir</a>
-                                                                        </div> -->
-                                                </div>
-                                            </li>
-                                            <li class="py-3 sm:py-4">
-                                                <div class="flex items-center ">
-                                                    <div class="flex-shrink-0">
-                                                        <img class="w-8 h-8 rounded-full"
-                                                            src="{% static 'medias/images/react.svg' %}" alt="React Logo">
-                                                    </div>
-                                                    <div class="flex-1 min-w-0 ms-4">
-                                                        <p
-                                                            class="text-sm font-medium text-gray-900 truncate  white:text-black">
-                                                            <a href="#">Les composants en React</a>
-                                                        </p>
-                                                        <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                                                            15 min
-                                                        </p>
-                                                    </div>
-                                                    <!-- <div
-                                                                            class="inline-flex items-center text-base font-semibold text-blue-500 ">
-                                                                            <a href="#">Voir</a>
-                                                                        </div> -->
-                                                </div>
-                                            </li>
-
+                                            {% endfor %}
 
                                         </ul>
                                     </div>
@@ -306,10 +186,7 @@
                                             <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-300">
                                                 <li class="py-3 sm:py-4">
                                                     <div class="flex items-center">
-                                                        <!-- <div class="flex-shrink-0">
-                                                                                <img class="w-8 h-8 rounded-full"
-                                                                                    src="{% static 'images/flask.svg' %}" alt="Flask Logo">
-                                                                            </div> -->
+
                                                         <div class="flex-1 min-w-0 ms-4">
                                                             <p
                                                                 class="text-sm font-medium text-gray-900 truncate white:text-black">
@@ -320,19 +197,12 @@
                                                                 19 Janvier 2024
                                                             </p>
                                                         </div>
-                                                        <!-- <div
-                                                                                                    class="inline-flex items-center text-base font-semibold text-blue-500 ">
-                                                                                                    <a href="#">Voir</a>
-                                                                                                </div> -->
+
                                                     </div>
                                                 </li>
                                                 <li class="py-3 sm:py-4">
                                                     <div class="flex items-center ">
-                                                        <!-- <div class="flex-shrink-0">
-                                                                                <img class="w-8 h-8 rounded-full"
-                                                                                    src="{% static 'images/python.svg' %}"
-                                                                                    alt="Python Logo">
-                                                                            </div> -->
+
                                                         <div class="flex-1 min-w-0 ms-4">
                                                             <p
                                                                 class="text-sm font-medium text-gray-900 truncate  white:text-black">
@@ -344,18 +214,12 @@
                                                                 15 Novembre 2023
                                                             </p>
                                                         </div>
-                                                        <!-- <div
-                                                                                                    class="inline-flex items-center text-base font-semibold text-blue-500 ">
-                                                                                                    <a href="#">Voir</a>
-                                                                                                </div> -->
+
                                                     </div>
                                                 </li>
                                                 <li class="py-3 sm:py-4">
                                                     <div class="flex items-center">
-                                                        <!-- <div class="flex-shrink-0">
-                                                                                <img class="w-8 h-8 rounded-full"
-                                                                                    src="{% static 'images/dart.svg' %}" alt="Dart Logo">
-                                                                            </div> -->
+
                                                         <div class="flex-1 min-w-0 ms-4">
                                                             <p
                                                                 class="text-sm font-medium text-gray-900 truncate white:text-black">
@@ -366,10 +230,7 @@
                                                                 12 Mai 2023
                                                             </p>
                                                         </div>
-                                                        <!-- <div
-                                                                                                    class="inline-flex items-center text-base font-semibold text-blue-500 ">
-                                                                                                    <a href="#">Voir</a>
-                                                                                                </div> -->
+
                                                     </div>
                                                 </li>
 
