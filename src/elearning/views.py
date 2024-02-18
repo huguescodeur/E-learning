@@ -32,7 +32,7 @@ def index_view(request):
 
         with connection.cursor() as cursor:
             cursor.execute("""
-                    SELECT course, course_description, logo_url, SUM(duration), title, COUNT(*)
+                    SELECT course, course_description, logo_url, SUM(duration), title, COUNT(*), slug
                     FROM videos_videos 
                     WHERE category = 'formation'
                     GROUP BY course, course_description, logo_url
@@ -43,7 +43,7 @@ def index_view(request):
 
         with connection.cursor() as cursor:
             cursor.execute("""
-                SELECT title, description, logo_url, duration, niveau, course
+                SELECT title, description, logo_url, duration, niveau, course, slug
                 FROM videos_videos 
                 WHERE category = 'tutoriel'
                 ORDER BY date DESC
@@ -56,14 +56,14 @@ def index_view(request):
 
     all_formation = [
         (course, course_description, logo_url.replace('videos/static/', ''),
-         convert_microseconds_to_time(duration), title, count)
-        for course, course_description, logo_url, duration, title, count in
+         convert_microseconds_to_time(duration), title, count, slug)
+        for course, course_description, logo_url, duration, title, count, slug in
         all_formation]
 
     all_tutorial = [
         (title, description, logo_url.replace('videos/static/', ''), convert_microseconds_to_time(duration),
-         niveau.capitalize(), course)
-        for title, description, logo_url, duration, niveau, course in
+         niveau.capitalize(), course, slug)
+        for title, description, logo_url, duration, niveau, course, slug in
         all_tutorial]
 
     context["all_formation"] = all_formation

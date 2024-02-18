@@ -29,8 +29,8 @@ urlpatterns = [
     path('formations/', formations_view, name="formations"),
     path('formations/playlist/<str:course>/', playlist_formations_view,
          name="mes_formations"),
-    path('tutoriels/playlist/<str:course>/', playlist_tutorial_view,
-         name="mes_tutoriels"),
+    path('tutoriels/playlist/<str:course>/<str:selected_slug>/',
+         playlist_tutorial_view, name="mes_tutoriels"),
     path('formations/search_suggestions_formations/', search_suggestions_formations,
          name='search_formations'),
 

@@ -117,13 +117,17 @@
     </div>
 </section>
 
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 
 <script>
+
+
     $(document).ready(function () {
         $('.search-input').on('keyup', function () {
             var searchQuery = $(this).val();
+
 
             $.ajax({
                 url: '/formations/',
@@ -135,13 +139,13 @@
                     // Vider le conteneur de formations
                     $('.div-tuto-container').empty();
 
-                   
+
 
                     // Ajouter les nouvelles formations
                     $.each(data, function (index, formation) {
                         var newFormation = `
             <div class="div-tuto rounded overflow-hidden shadow-lg border pt-4">
-                <a href="/mes_formations/${formation[0]}/">
+                <a href="playlist/${formation[0]}/">
                     <div class="div-tuto-titre px-6 flex items-center justify-between mb-4">
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
@@ -151,16 +155,16 @@
                     </div>
                 </a>
                 <div class="px-6">
-                    <a href="/mes_formations/${formation[0]}/" class="titre-tuto pb-2 font-semibold text-lg inline-block ">
+                    <a href="playlist/${formation[0]}/" class="titre-tuto pb-2 font-semibold text-lg inline-block ">
                         Formation ${formation[0]}
                     </a>
                     <div class="limited-lines text-gray-500 rounded-lg">
-                        <a href="/mes_formations/${formation[0]}/">
+                        <a href="playlist/${formation[0]}/">
                             <p class="text-sm">${formation[1]}</p>
                         </a>
                     </div>
                 </div>
-                <a href="/mes_formations/${formation[0]}/">
+                <a href="playlist/${formation[0]}/">
                     <div class="formation-div-time-icon div-time-icon px-6 py-4 flex flex-row items-center justify-between">
                         <p class="text-sm text-gray-500 truncate dark:text-gray-400 ">${formation[5]} Chapitres</p>
                         <span href="#" class="pl-2 time-icon py-1 text-sm font-regular text-gray-500 mr-1 flex flex-row justify-between items-center">

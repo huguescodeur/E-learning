@@ -1,7 +1,7 @@
 import json
 
 from django.db import connection
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.shortcuts import get_object_or_404
 
 from videos.models import Videos
@@ -235,7 +235,7 @@ def tutoriels_view(request):
 
         with connection.cursor() as cursor:
             cursor.execute("""
-                SELECT title, description, logo_url, duration, niveau, course
+                SELECT title, description, logo_url, duration, niveau, course, slug
                 FROM videos_videos 
                 WHERE category = 'tutoriel' AND (LOWER(title) LIKE LOWER(%s) OR LOWER(course) LIKE LOWER(%s))
             """, ['%' + search_query + '%', '%' + search_query + '%'])
@@ -243,20 +243,21 @@ def tutoriels_view(request):
 
     all_tutorial = [
         (title, description, logo_url.replace('videos/static/', ''), convert_microseconds_to_time(duration),
-         niveau.capitalize(), course)
-        for title, description, logo_url, duration, niveau, course in
+         niveau.capitalize(), course, slug)
+        for title, description, logo_url, duration, niveau, course, slug in
         all_tutorial]
 
     context["all_tutorial"] = all_tutorial
-    
+
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        # json_data = serializers.serialize('json', all_formation)
         return JsonResponse(all_tutorial, safe=False)
 
     return render(request, 'tutoriels.html', context)
 
 
-# ? PlayList Formations
-def playlist_tutorial_view(request, course):
+# ? PlayList Tutoriel
+def playlist_tutorial_view(request, course, selected_slug):
     user_id = request.session.get('user_id', None)
 
     current_view_name = request.resolver_match.url_name
@@ -267,11 +268,14 @@ def playlist_tutorial_view(request, course):
         cursor.execute("""
             SELECT title, video_file, description, duration, miniature, access, slug, course
             FROM videos_videos
-            WHERE course = %s AND category = %s
-        """, [course, "tutoriel"])
+            WHERE category = %s AND course = %s
+        """, ["tutoriel", course])
         tutoriels_videos = cursor.fetchall()
 
     print(f"Playlist Tuto: {tutoriels_videos}")
+    
+    if not tutoriels_videos:
+        return redirect('tutoriels')
 
     # context["playlist"] = formation_videos
 
@@ -283,7 +287,7 @@ def playlist_tutorial_view(request, course):
     context["total_duration"] = f"{hours}h{minutes}min{
         seconds}s" if hours else f"{minutes}min{seconds}s"
     context["total_lessons"] = len(tutoriels_videos)
-    context["course_title"] = course
+    # context["course_title"] = course
 
     # context['thumbnail']: miniature.replace('videos/static/medias/miniatures/', '')
 
@@ -302,6 +306,8 @@ def playlist_tutorial_view(request, course):
 
     print(tutoriel_videos)
     context["default_thumbnail"] = tutoriel_videos[0]['thumbnail']
+
+    # print(f"Selected Video: {context["selected_tutorial"]}")
 
     # print(context["default_thumbnail"])
     context["playlist"] = json.dumps(tutoriel_videos)
@@ -325,12 +331,17 @@ def playlist_tutorial_view(request, course):
         context['user'] = user
         context["image_url"] = context["user"][13].replace(
             'account/static/', '')
-
+        
+    context["selected_slug"] = selected_slug
         # print(context["image_url"])
-
+    selected_tutorial = [tutorial for tutorial in tutoriels_videos if tutorial[6] == selected_slug]
+    if not selected_tutorial:
+        # Si aucun tutoriel correspondant n'est trouvé, redirigez l'utilisateur vers la page des tutoriels
+        return redirect('tutoriels')
     # print(context["user"][-1])
+        
 
-    return render(request, 'playlist_formations.html', context)
+    return render(request, 'playlist_tutorials.html', context)
 
 
 def search_suggestions_formations(request):

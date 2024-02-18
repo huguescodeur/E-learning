@@ -9,7 +9,8 @@
     }
 </style>
 
-<div data-is-premium="{{ is_premium|yesno:'true,false' }}" class="mes_formations mt-20 mb-10">
+
+<div data-is-premium="{{ is_premium|yesno:'true,false' }}" class="mes_tutoriels mt-20 mb-10">
     <main class="containers">
         <section class="main-video" style="position: relative;">
             <video id="main-video" src="" autoplay controls></video>
@@ -35,21 +36,34 @@
 </div>
 
 <script>
-
+    let selected_slug = "{{ selected_slug }}";
+    console.log(`Selected Slug: ${selected_slug}`)
     const main_video = document.querySelector(".main-video video");
     const main_video_title = document.querySelector(".main-video .title");
     const video_playlist = document.querySelector(".video-playlist .videos");
     const freeIconPath = "{% static 'medias/images/unlock.png' %}";
     const premiumIconPath = "{% static 'medias/images/lock.png' %}";
 
-    console.log(video_playlist);
+
 
     let playlistData = JSON.parse('{{ playlist|safe }}');
-    let is_premium = document.querySelector(".mes_formations").dataset.isPremium === 'true';
+    let is_premium = document.querySelector(".mes_tutoriels").dataset.isPremium === 'true';
 
-    console.log(is_premium);
 
     let data = playlistData;
+
+    console.log("Tuto");
+
+    let selectedIndex = data.findIndex(video => video.slug === selected_slug);
+
+    let currentIndex = selectedIndex;
+
+
+    console.log(`Selected Index: ${selectedIndex}`);
+
+    if (selectedIndex === -1) {
+        selectedIndex = 0;
+    }
 
 
 
@@ -68,6 +82,7 @@
     });
 
     let videos = document.querySelectorAll('.video');
+    let selected_video = videos[selectedIndex];
     videos[0].classList.add('active')
 
     videos.forEach(selected_video => {
@@ -80,6 +95,8 @@
             selected_video.classList.add('active');
 
             let match_video = data.find(video => video.id === selected_video.dataset.id);
+
+
 
 
             main_video_title.innerHTML = match_video.access === 'gratuit' ? 'Gratuit' : 'Premium';
@@ -96,7 +113,22 @@
         });
     });
 
-    videos[0].click();
+    //videos[0].click();
+    selected_video.click();
 
+    main_video.addEventListener('ended', () => {
+        currentIndex++;
+        if (currentIndex >= videos.length) {
+            currentIndex = 0; // Retour au début de la liste si nous avons atteint la fin
+        }
+        videos[currentIndex].click(); // Cliquez sur la prochaine vidéo
+    });
+
+
+</script>
+
+<script src="https://cdn.plyr.io/3.6.8/plyr.js"></script>
+<script>
+    const player = new Plyr('#main-video');
 </script>
 {% endblock %}
