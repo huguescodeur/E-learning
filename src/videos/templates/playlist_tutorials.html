@@ -52,6 +52,7 @@
 
     let data = playlistData;
 
+
     console.log("Tuto");
 
     let selectedIndex = data.findIndex(video => video.slug === selected_slug);
@@ -110,6 +111,8 @@
                 document.getElementById('main-video').src = "{% static 'medias/videos/' %}" + match_video.name; // Mettre à jour la source de la vidéo à la vidéo sélectionnée
                 document.getElementById('main-video').controls = true; // Activer les contrôles
             }
+
+
         });
     });
 

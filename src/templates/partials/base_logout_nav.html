@@ -29,8 +29,9 @@
             </svg>
         </li> -->
         <!-- text-blue-600  font-bold-->
-        <li class="{% if current_view_name == 'tutoriels' %}active{% endif %}"><a
-                class="text-sm text-gray-400 hover:text-gray-500" href="{% url 'tutoriels' %}">Tutoriels</a></li>
+        <li class="{% if current_view_name == 'tutoriels' or current_view_name == 'mes_tutoriels' %}active{% endif %}">
+            <a class="text-sm text-gray-400 hover:text-gray-500" href="{% url 'tutoriels' %}">Tutoriels</a>
+        </li>
         <!-- <li class="text-gray-300">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill"
                 viewBox="0 0 24 24">
@@ -38,8 +39,10 @@
                     d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
             </svg>
         </li> -->
-        <li class="{% if current_view_name == 'formations' or current_view_name == 'mes_formations' %}active{% endif %}"><a
-                class="text-sm text-gray-400 hover:text-gray-500" href="{% url 'formations' %}">Formations</a></li>
+        <li
+            class="{% if current_view_name == 'formations' or current_view_name == 'mes_formations' or current_view_name == mes_formations_slug %}active{% endif %}">
+            <a class="text-sm text-gray-400 hover:text-gray-500" href="{% url 'formations' %}">Formations</a>
+        </li>
         <!-- <li class="text-gray-300">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill"
                 viewBox="0 0 24 24">
@@ -47,8 +50,8 @@
                     d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
             </svg>
         </li> -->
-        <li class="{% if current_view_name == 'blog' %}active{% endif %}"><a
-                class="text-sm text-gray-400 hover:text-gray-500" href="{% url 'blog' %}">Blog</a></li>
+        <!-- <li class="{% if current_view_name == 'blog' %}active{% endif %}"><a
+                class="text-sm text-gray-400 hover:text-gray-500" href="{% url 'blog' %}">Blog</a></li> -->
         <!-- <li class="text-gray-300">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill"
                 viewBox="0 0 24 24">
@@ -61,11 +64,11 @@
     </ul>
     <a class="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold rounded-xl transition duration-200
            {% if current_view_name == 'connexion' %}ring-2 ring-offset-2 ring-blue-500{% endif %}"
-   href="{% url 'connexion' %}">Connexion</a>
+        href="{% url 'connexion' %}">Connexion</a>
 
-<a class="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200
+    <a class="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200
            {% if current_view_name == 'inscription' %}ring-2 ring-offset-2 ring-blue-500{% endif %}"
-   href="{% url 'inscription' %}">Inscription</a>
+        href="{% url 'inscription' %}">Inscription</a>
 </nav>
 <div class="navbar-menu relative z-50 hidden">
     <div class="navbar-backdrop fixed inset-0 bg-gray-800 opacity-25"></div>
@@ -97,14 +100,15 @@
                     <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
                         href="{% url 'tutoriels' %}">Tutoriels</a>
                 </li>
-                <li class="mb-1 {% if current_view_name == 'formations' %}active{% endif %}">
+                <li
+                    class="mb-1 {% if current_view_name == 'formations' or current_view_name == 'mes_formations' or current_view_name == mes_formations_slug %}active{% endif %}">
                     <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
                         href="{% url 'formations' %}">Formations</a>
                 </li>
-                <li class="mb-1 {% if current_view_name == 'blog' %}active{% endif %}">
+                <!-- <li class="mb-1 {% if current_view_name == 'blog' %}active{% endif %}">
                     <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
                         href="{% url 'blog' %}">Blog</a>
-                </li>
+                </li> -->
                 <li class="mb-1 {% if current_view_name == 'contact' %}active{% endif %}">
                     <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
                         href="{% url 'contact' %}">Contact</a>

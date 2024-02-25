@@ -24,49 +24,21 @@ def convert_microseconds_to_time(microseconds):
 
 
 # ? Formations
-# def formations_view(request):
-#     user_id = request.session.get('user_id', None)
-
-#     current_view_name = request.resolver_match.url_name
-#     context = {'title': 'Formations', 'current_view_name': current_view_name}
-
-#     if user_id is not None:
-#         with connection.cursor() as cursor:
-#             cursor.execute(
-#                 "SELECT * FROM account_user WHERE id = %s", [user_id])
-#             user = cursor.fetchone()
-
-#         context['user'] = user
-#         context["image_url"] = context["user"][13].replace(
-#             'account/static/', '')
-
-#         with connection.cursor() as cursor:
-#             cursor.execute("""
-#                 SELECT course, course_description, logo_url, SUM(duration), title, COUNT(*)
-#                 FROM videos_videos
-#                 WHERE category = 'formation'
-#                 GROUP BY course, course_description, logo_url
-#             """)
-#             all_formation = cursor.fetchall()
-
-#     all_formation = [
-#         (course, course_description, logo_url.replace('videos/static/', ''), convert_microseconds_to_time(duration),
-#          title, count)
-#         for course, course_description, logo_url, duration, title, count in
-#         all_formation]
-
-#     context["all_formation"] = all_formation
-
-#     print(context["all_formation"])
-
-#     return render(request, 'formations.html', context)
-
 def formations_view(request):
     user_id = request.session.get('user_id', None)
     search_query = request.GET.get('search', '')
 
     current_view_name = request.resolver_match.url_name
     context = {'title': 'Formations', 'current_view_name': current_view_name}
+
+    with connection.cursor() as cursor:
+        cursor.execute("""
+            SELECT course, course_description, logo_url, SUM(duration), title, COUNT(*)
+            FROM videos_videos 
+            WHERE category = 'formation' AND LOWER(course) LIKE LOWER(%s)
+            GROUP BY course, course_description, logo_url
+        """, ['%' + search_query + '%'])
+        all_formation = cursor.fetchall()
 
     if user_id is not None:
         with connection.cursor() as cursor:
@@ -78,15 +50,6 @@ def formations_view(request):
         context["image_url"] = context["user"][13].replace(
             'account/static/', '')
 
-        with connection.cursor() as cursor:
-            cursor.execute("""
-                SELECT course, course_description, logo_url, SUM(duration), title, COUNT(*)
-                FROM videos_videos 
-                WHERE category = 'formation' AND LOWER(course) LIKE LOWER(%s)
-                GROUP BY course, course_description, logo_url
-            """, ['%' + search_query + '%'])
-            all_formation = cursor.fetchall()
-
     all_formation = [
         (course, course_description, logo_url.replace('videos/static/', ''), convert_microseconds_to_time(duration),
          title, count)
@@ -95,17 +58,14 @@ def formations_view(request):
 
     context["all_formation"] = all_formation
 
-    print(context["all_formation"])
-
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        # json_data = serializers.serialize('json', all_formation)
         return JsonResponse(all_formation, safe=False)
 
     return render(request, 'formations.html', context)
 
 
 # ? PlayList Formations
-def playlist_formations_view(request, course):
+def playlist_formations_view(request, course, selected_slug=None):
     user_id = request.session.get('user_id', None)
 
     current_view_name = request.resolver_match.url_name
@@ -175,53 +135,20 @@ def playlist_formations_view(request, course):
 
 
 # ? Tutoriels
-# def tutoriels_view(request):
-#     user_id = request.session.get('user_id', None)
-
-#     current_view_name = request.resolver_match.url_name
-#     context = {'title': 'Tutoriels', 'current_view_name': current_view_name}
-
-#     if user_id is not None:
-#         with connection.cursor() as cursor:
-#             cursor.execute(
-#                 "SELECT * FROM account_user WHERE id = %s", [user_id])
-#             user = cursor.fetchone()
-
-#         context['user'] = user
-#         context["image_url"] = context["user"][13].replace(
-#             'account/static/', '')
-
-#         print(context["image_url"])
-
-#         with connection.cursor() as cursor:
-#             cursor.execute("""
-#                 SELECT title, description, logo_url, duration, niveau, course
-#                 FROM videos_videos
-#                 WHERE category = 'tutoriel'
-
-#             """)
-#             all_tutorial = cursor.fetchall()
-
-#         print(all_tutorial[0][4])
-
-#     all_tutorial = [
-#         (title, description, logo_url.replace('videos/static/', ''), convert_microseconds_to_time(duration),
-#          niveau.capitalize(), course)
-#         for title, description, logo_url, duration, niveau, course in
-#         all_tutorial]
-
-#     print(f"All tutorials: {all_tutorial}")
-
-#     context["all_tutorial"] = all_tutorial
-
-#     return render(request, 'tutoriels.html', context)
-
 def tutoriels_view(request):
     user_id = request.session.get('user_id', None)
     search_query = request.GET.get('search', '')
 
     current_view_name = request.resolver_match.url_name
     context = {'title': 'Tutoriels', 'current_view_name': current_view_name}
+
+    with connection.cursor() as cursor:
+        cursor.execute("""
+            SELECT title, description, logo_url, duration, niveau, course, slug
+            FROM videos_videos 
+            WHERE category = 'tutoriel' AND (LOWER(title) LIKE LOWER(%s) OR LOWER(course) LIKE LOWER(%s))
+        """, ['%' + search_query + '%', '%' + search_query + '%'])
+        all_tutorial = cursor.fetchall()
 
     if user_id is not None:
         with connection.cursor() as cursor:
@@ -233,14 +160,6 @@ def tutoriels_view(request):
         context["image_url"] = context["user"][13].replace(
             'account/static/', '')
 
-        with connection.cursor() as cursor:
-            cursor.execute("""
-                SELECT title, description, logo_url, duration, niveau, course, slug
-                FROM videos_videos 
-                WHERE category = 'tutoriel' AND (LOWER(title) LIKE LOWER(%s) OR LOWER(course) LIKE LOWER(%s))
-            """, ['%' + search_query + '%', '%' + search_query + '%'])
-            all_tutorial = cursor.fetchall()
-
     all_tutorial = [
         (title, description, logo_url.replace('videos/static/', ''), convert_microseconds_to_time(duration),
          niveau.capitalize(), course, slug)
@@ -250,7 +169,6 @@ def tutoriels_view(request):
     context["all_tutorial"] = all_tutorial
 
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        # json_data = serializers.serialize('json', all_formation)
         return JsonResponse(all_tutorial, safe=False)
 
     return render(request, 'tutoriels.html', context)
@@ -273,7 +191,7 @@ def playlist_tutorial_view(request, course, selected_slug):
         tutoriels_videos = cursor.fetchall()
 
     print(f"Playlist Tuto: {tutoriels_videos}")
-    
+
     if not tutoriels_videos:
         return redirect('tutoriels')
 
@@ -331,15 +249,15 @@ def playlist_tutorial_view(request, course, selected_slug):
         context['user'] = user
         context["image_url"] = context["user"][13].replace(
             'account/static/', '')
-        
+
     context["selected_slug"] = selected_slug
-        # print(context["image_url"])
-    selected_tutorial = [tutorial for tutorial in tutoriels_videos if tutorial[6] == selected_slug]
+    # print(context["image_url"])
+    selected_tutorial = [
+        tutorial for tutorial in tutoriels_videos if tutorial[6] == selected_slug]
     if not selected_tutorial:
         # Si aucun tutoriel correspondant n'est trouvé, redirigez l'utilisateur vers la page des tutoriels
         return redirect('tutoriels')
     # print(context["user"][-1])
-        
 
     return render(request, 'playlist_tutorials.html', context)
 

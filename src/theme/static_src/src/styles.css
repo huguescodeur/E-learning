@@ -349,7 +349,6 @@ li.active a:hover{
   width: 100%;
   height: 30rem;
   color: #3B82F6;
-  /* border: 2px solid red; */
 }
 
 .main-video .title{
@@ -459,6 +458,8 @@ li.active a:hover{
     
 }
 
+
+
 .sous-menu-dropdown1{
   width: 100%;
 }
@@ -505,5 +506,88 @@ li.active a:hover{
 
   
 }
+
+/* ! Settings */
+.settings-container{
+  /* background: greenyellow; */
+  height: 60px;
+  width: 100%;
+  margin-top: 6rem;
+  display: flex;
+  align-items: center;
+}
+
+.settings-container h1{
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.compte-container{
+  height: 325px;
+}
+
+.option-container, .facturation-container{
+  height: 190px;
+}
+
+.compte-container-h2{
+  height: 10%;
+}
+
+.compte-container h2{
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.compte-container .compte-container-infos{
+  height: 80%;
+}
+
+.compte-container-infos-nom, .compte-container-infos-email, .compte-container-infos-password{
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 60% 40%;
+  /* text-align: left; */
+  
+}
+
+@media screen and (max-width: 430px) {
+ 
+ .compte-container .compte-container-infos{
+  font-size: 0.8rem;
+}
+
+  
+}
+
+@media screen and (max-width: 404px) {
+  
+ .compte-container .compte-container-infos{
+  font-size: 0.6rem;
+}
+
+  
+}
+
+@media screen and (max-width: 349px) {
+  
+.compte-container-infos-nom, .compte-container-infos-email, .compte-container-infos-password{
+  cursor: pointer;
+  /* display: block; */
+  /* font-size: 0.4rem; */
+  /* text-align: left; */
+  
+}
+
+.compte-container-infos-nom .delete-compte{
+  margin: 0;
+}
+
+  
+}
+
+/* .compte-container-infos button{
+  cursor: pointer;
+} */
 
 

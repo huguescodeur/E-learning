@@ -24,35 +24,37 @@ def index_view(request):
     current_view_name = request.resolver_match.url_name
     context = {'title': 'Accueil', 'current_view_name': current_view_name}
 
+    with connection.cursor() as cursor:
+        cursor.execute("""
+                SELECT course, course_description, logo_url, SUM(duration), title, COUNT(*), slug
+                FROM videos_videos 
+                WHERE category = 'formation'
+                GROUP BY course, course_description, logo_url
+                ORDER BY date DESC
+                LIMIT 4
+        """)
+        all_formation = cursor.fetchall()
+
+    with connection.cursor() as cursor:
+        cursor.execute("""
+            SELECT title, description, logo_url, duration, niveau, course, slug
+            FROM videos_videos 
+            WHERE category = 'tutoriel'
+            ORDER BY date DESC
+            LIMIT 4
+            
+        """)
+        all_tutorial = cursor.fetchall()
+
     if user_id is not None:
         with connection.cursor() as cursor:
             cursor.execute(
                 "SELECT * FROM account_user WHERE id = %s", [user_id])
             user = cursor.fetchone()
 
-        with connection.cursor() as cursor:
-            cursor.execute("""
-                    SELECT course, course_description, logo_url, SUM(duration), title, COUNT(*), slug
-                    FROM videos_videos 
-                    WHERE category = 'formation'
-                    GROUP BY course, course_description, logo_url
-                    ORDER BY date DESC
-                    LIMIT 4
-            """)
-            all_formation = cursor.fetchall()
-
-        with connection.cursor() as cursor:
-            cursor.execute("""
-                SELECT title, description, logo_url, duration, niveau, course, slug
-                FROM videos_videos 
-                WHERE category = 'tutoriel'
-                ORDER BY date DESC
-                LIMIT 4
-                
-            """)
-            all_tutorial = cursor.fetchall()
-
-        # print(all_tutorial[0][4])
+        context['user'] = user
+        context["image_url"] = context["user"][13].replace(
+            'account/static/', '')
 
     all_formation = [
         (course, course_description, logo_url.replace('videos/static/', ''),
@@ -68,15 +70,6 @@ def index_view(request):
 
     context["all_formation"] = all_formation
     context["all_tutorial"] = all_tutorial
-
-    print(f"All formation{context["all_formation"]}")
-    print(f"All tutorials: {all_tutorial}")
-
-    context['user'] = user
-    context["image_url"] = context["user"][13].replace(
-        'account/static/', '')
-
-    print(context["image_url"])
 
     return render(request, 'layouts/menu/index.html', context)
 

@@ -168,7 +168,7 @@
 
                         <!===== Les dernières info=====>
 
-                            <div class="div-rounded w-full md:w-1/2 lg mb-8 px-1">
+                            <!-- <div class="div-rounded w-full md:w-1/2 lg mb-8 px-1">
 
                                 <div class=" rounded flex justify-center">
                                     <div
@@ -241,7 +241,7 @@
                                     </div>
                                 </div>
 
-                            </div>
+                            </div> -->
 
                 </div>
                 <!===== Les dernières formations=====>
@@ -466,7 +466,7 @@
                                 <button
                                     class="font-bold inline-flex items-center justify-center w-full max-w-xs px-4 py-2 transition-colors border rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
                                     :class="plan.name == 'Devenir premium (1 mois)' ? 'bg-blue-500 text-white hover:bg-blue-600' : 'hover:bg-blue-500 hover:text-white'"
-                                    x-text="`${plan.name}`"></button>
+                                    x-text="`${plan.name == 'Devenir premium (1 mois)' && billPlan == 'annually' ? 'Devenir premium (1 an)' : plan.name}`"></button>
                             </div>
                         </section>
                     </template>

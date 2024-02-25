@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from . import views
-from account.views import connexion_view, inscription_view, logout_view
+from account.views import connexion_view, inscription_view, logout_view, settings_view, update_user_info_view, update_image_view, delete_account_view
 from django.conf import settings
 from django.conf.urls.static import static
 from videos.views import formations_view, playlist_formations_view, tutoriels_view, playlist_tutorial_view, search_suggestions_formations
@@ -29,6 +29,8 @@ urlpatterns = [
     path('formations/', formations_view, name="formations"),
     path('formations/playlist/<str:course>/', playlist_formations_view,
          name="mes_formations"),
+    path('formations/playlist/<str:course>/<str:selected_slug>/', playlist_formations_view,
+         name="mes_formations_slug"),
     path('tutoriels/playlist/<str:course>/<str:selected_slug>/',
          playlist_tutorial_view, name="mes_tutoriels"),
     path('formations/search_suggestions_formations/', search_suggestions_formations,
@@ -39,6 +41,10 @@ urlpatterns = [
     path('connexion/', connexion_view, name="connexion"),
     path('inscription/', inscription_view, name="inscription"),
     path('logout/', logout_view, name='logout'),
+    path('settings/edit/', settings_view, name='settings'),
+    path('settings/update/', update_user_info_view, name='update_user_info'),
+    path('image/update/', update_image_view, name='update_image'),
+    path('delete_account/', delete_account_view, name='delete_account'),
 
 ]
 
