@@ -1,5 +1,4 @@
-from datetime import timezone
-
+from django.utils import timezone
 from django.contrib.auth.models import User, AbstractUser, Group, Permission
 from django.db import models
 
@@ -33,8 +32,23 @@ class Apprenant(models.Model):
 
 
 # ? Class Formateur
-
-
 class Formateur(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     nom_formateur = models.CharField(max_length=50)
+
+
+# ? Class Message User
+class Contact(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=200)
+    email = models.EmailField()
+    message = models.TextField()
+    date = models.DateTimeField(default=timezone.now)
+
+
+# ? Class Message non User
+class GuestContact(models.Model):
+    name = models.CharField(max_length=200)
+    email = models.EmailField()
+    message = models.TextField()
+    date = models.DateTimeField(default=timezone.now)

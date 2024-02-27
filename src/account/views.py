@@ -1,3 +1,4 @@
+import os
 import base64
 from functools import wraps
 import re
@@ -14,6 +15,9 @@ from django.urls import reverse
 from django.utils import timezone
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 
 # Logique du décirateur
@@ -257,3 +261,193 @@ def delete_account_view(request):
         cursor.execute("DELETE FROM account_user WHERE id = %s", [user_id])
         logout(request)
     return JsonResponse({'redirect_url': reverse('connexion')})
+
+
+# ? Premium account
+def premium_account_view(request):
+    user_id = request.session.get('user_id', None)
+
+    current_view_name = request.resolver_match.url_name
+    context = {'title': 'Premium', 'current_view_name': current_view_name}
+
+    if user_id is not None:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                "SELECT * FROM account_user WHERE id = %s", [user_id])
+            user = cursor.fetchone()
+
+        context['user'] = user
+        context["image_url"] = context["user"][13].replace(
+            'account/static/', '')
+
+    return render(request, 'premium/premium.html', context)
+
+
+# ? Methode d'envoie email
+def send_email(sender_email, receiver_email, password, name, email, message_text, request):
+    try:
+        # Configuration de l'email
+        subject = f"Nouveau message de votre formulaire de contact"
+        body = f"Nom: {name}\nEmail: {email}\nMessage: {message_text}"
+
+        # Création de l'email
+        message = MIMEMultipart()
+        message["From"] = sender_email
+        message["To"] = receiver_email
+        message["Reply-To"] = email
+        message["Subject"] = subject
+        message.attach(MIMEText(body, "plain"))
+
+        # Connexion au serveur SMTP et envoi de l'email
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+            server.login(sender_email, password)
+            server.sendmail(sender_email, receiver_email, message.as_string())
+
+        messages.success(request, 'Email envoyé avec succès!')
+    except smtplib.SMTPAuthenticationError:
+        messages.error(
+            request, "Erreur d'authentification . Vérifiez votre adresse e-mail et votre mot de passe.")
+    except Exception as e:
+        messages.error(
+            request, f"Une erreur s'est produite lors de l'envoi de l'e-mail : {e}")
+
+
+# ? Contact
+def envoie_message_view(request):
+    user_id = request.session.get('user_id', None)
+
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message_text = request.POST.get('textarea')
+
+        if user_id is not None:
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    "SELECT * FROM account_user WHERE id = %s", [user_id])
+                user = cursor.fetchone()
+
+                # Envoyer un email
+                sender_email = "goliyao09@gmail.com"
+                receiver_email = "huguescodeur@gmail.com"
+                password = "dqtylrxcwoflitis"
+
+                send_email(sender_email, receiver_email,
+                           password, name, email, message_text, request)
+
+                # Insérer les données dans la base de données
+                try:
+                    with connection.cursor() as cursor:
+                        current_time = timezone.now()
+                        cursor.execute("INSERT INTO account_contact (user_id, name, email, message, date) VALUES (%s, %s, %s, %s, %s)", [
+                            user_id, name, email, message_text, current_time])
+                        print(
+                            'Message enregistré avec succès!')
+                        return redirect("contact")
+                except Exception as e:
+                    print(
+                        f'Une erreur s\'est produite lors de l\'insertion des données dans la base de données : {e}')
+                    return redirect("contact")
+
+        elif user_id is None:
+            sender_email = "goliyao09@gmail.com"
+            receiver_email = "huguescodeur@gmail.com"
+            password = "dqtylrxcwoflitis"
+
+            send_email(sender_email, receiver_email,
+                       password, name, email, message_text, request)
+            try:
+                with connection.cursor() as cursor:
+                    current_time = timezone.now()
+                    cursor.execute("INSERT INTO account_guestcontact (name, email, message, date) VALUES (%s, %s, %s, %s)", [
+                        name, email, message_text, current_time])
+                print(
+                    'Message enregistré avec succès!')
+                return redirect("contact")
+            except Exception as e:
+                print(
+                    f'Une erreur s\'est produite lors de l\'insertion des données dans la base de données : {e}')
+
+                return redirect("contact")
+    else:
+        return redirect("contact")
+
+# def send_email(sender_email, receiver_email, password, name, email, message_text):
+#     # Configuration de l'email
+#     subject = f"Nouveau message de votre formulaire de contact"
+#     body = f"Nom: {name}\nEmail: {email}\nMessage: {message_text}"
+
+#     # Création de l'email
+#     message = MIMEMultipart()
+#     message["From"] = sender_email
+#     message["To"] = receiver_email
+#     message["Subject"] = subject
+#     message.attach(MIMEText(body, "plain"))
+
+#     # Connexion au serveur SMTP et envoi de l'email
+#     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+#         server.login(sender_email, password)
+#         server.sendmail(sender_email, receiver_email, message.as_string())
+
+#     print("Email envoyé avec succès!")
+
+
+# # ? Contact
+# def envoie_message_view(request):
+#     user_id = request.session.get('user_id', None)
+
+#     if user_id is not None:
+#         with connection.cursor() as cursor:
+#             cursor.execute(
+#                 "SELECT * FROM account_user WHERE id = %s", [user_id])
+#             user = cursor.fetchone()
+#         if request.method == 'POST':
+#             name = request.POST.get('name')
+#             email = request.POST.get('email')
+#             message_text = request.POST.get('textarea')
+
+#             # Envoyer un email
+#             sender_email = "goliyao09@gmail.com"
+#             receiver_email = "huguescodeur@gmail.com"
+#             password = "dqtylrxcwoflitis"
+
+#             print(sender_email, receiver_email, password)
+
+#             send_email(sender_email, receiver_email,
+#                        password, name, email, message_text)
+
+#             # Insérer les données dans la base de données
+#             with connection.cursor() as cursor:
+#                 current_time = timezone.now()
+#                 cursor.execute("INSERT INTO account_contact (user_id, name, email, message, date) VALUES (%s, %s, %s, %s, %s)", [
+#                     user_id, name, email, message_text, current_time])
+#         else:
+#             cursor.execute("INSERT INTO account_guestcontact (name, email, message, date) VALUES (%s, %s, %s, %s)", [
+#                            name, email, message_text, current_time])
+
+#             print("Envoyé")
+#         return redirect("contact")
+
+#     else:
+#         print("Echec")
+#         return redirect("contact")
+
+    # messages.error(request, "Email ou mot de passe incorrect")
+
+        # Envoyer un email
+        # mail_content = f"Vous avez reçu un nouveau message de {name} ({email}) : {
+        #     message}"
+        # sender_address = os.getenv('SENDER_ADDRESS')
+        # sender_pass = os.getenv('SENDER_PASSWORD')
+        # receiver_address = os.getenv('RECEIVER_ADDRESS')
+        # msg = MIMEMultipart()
+        # msg['From'] = sender_address
+        # msg['To'] = receiver_address
+        # msg['Subject'] = 'Nouveau message de contact'
+        # msg.attach(MIMEText(mail_content, 'plain'))
+        # session = smtplib.SMTP('smtp.gmail.com', 587)
+        # session.starttls()
+        # session.login(sender_address, sender_pass)
+        # text = msg.as_string()
+        # session.sendmail(sender_address, receiver_address, text)
+        # session.quit()
