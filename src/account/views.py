@@ -1,3 +1,4 @@
+import os
 import base64
 from functools import wraps
 import re
@@ -14,6 +15,9 @@ from django.urls import reverse
 from django.utils import timezone
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 
 # Logique du décirateur
@@ -257,8 +261,6 @@ def delete_account_view(request):
         cursor.execute("DELETE FROM account_user WHERE id = %s", [user_id])
         logout(request)
     return JsonResponse({'redirect_url': reverse('connexion')})
-<<<<<<< 77dead05eba6a88dd783ad7a3526e7145d1435c8
-=======
 
 
 # ? Premium account
@@ -369,4 +371,3 @@ def envoie_message_view(request):
                 return redirect("contact")
     else:
         return redirect("contact")
->>>>>>> Suppression infos!
