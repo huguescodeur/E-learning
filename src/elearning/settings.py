@@ -160,8 +160,11 @@ INTERNAL_IPS = [
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+<<<<<<< HEAD
 <<<<<<< 77dead05eba6a88dd783ad7a3526e7145d1435c8
 =======
+=======
+>>>>>>> a0ad5b9a22ab1d8800f98276b4491b149d9cc17d
 
 
 EMAIL_BACKEND = 'djando.core.mail.backends.smtp.EmailBackend'
@@ -171,4 +174,7 @@ EMAIL_HOST_USER = 'a'
 EMAIL_HOST_PASSWORD = 'a'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+<<<<<<< HEAD
 >>>>>>> Suppression infos!
+=======
+>>>>>>> a0ad5b9a22ab1d8800f98276b4491b149d9cc17d

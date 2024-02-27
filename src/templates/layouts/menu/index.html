@@ -1,6 +1,14 @@
 {% extends 'partials/base.html' %}
 {% load static %}
 {% block body %}
+{% if messages %}
+<ul class="messages text-sm hidden" role="alert">
+    {% for message in messages %}
+    <li id="flash-message" {% if message.tags %} class="{{ message.tags }} font-medium text-red-400" {%endif%}>
+        {{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
 <div class="mt-70 section-intro">
     <section class="  text-slate-950 px-12 pt-40">
         <div class="relative flex flex-col justify-center mx-auto sm:py-12 lg:py-6 lg:flex-row lg:justify-between">
@@ -367,162 +375,9 @@
         </section>
     </div>
 
-
-
-
-
     <!===== Devenir Premium====>
-        <div class="container mx-auto antialiased text-gray-900 bg-white" x-data="setup()">
-            <!-- Navbar -->
 
 
-            <main class="mx-4 my-16">
-                <div class="text-center">
-                    <h2
-                        class="mb-4  title-font  mb-4 text-4xl font-bold leading-10 tracking-tight sm:text-5xl sm:leading-none md:text-6xl">
-                        Devenir premium
-                    </h2>
-                    <p class="text-sm font-normal text-gray-400">
-                        Devenir premium chez Hugues Codeur, c'est soutenir la création de nouveaux contenus chaque
-                        semaine .
-                    </p>
-                    <p class="text-sm font-normal text-gray-400">
-                        et
-                        accéder à du contenu
-                        exclusif pour apprendre et s'améliorer (comme le téléchargement des vidéos et des sources).
-                    </p>
-                </div>
-
-                <!-- Plan switch -->
-                <div class="flex items-center justify-center mt-10 space-x-4">
-                    <span class="text-base font-medium" :class="{ 'text-blue-500': billPlan == 'monthly' }">1
-                        Mois</span>
-                    <button
-                        class="relative rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                        x-cloak @click="billPlan == 'monthly' ? billPlan = 'annually' : billPlan = 'monthly'">
-                        <div class="w-16 h-8 transition bg-blue-500 rounded-full shadow-md outline-none"></div>
-                        <div class="absolute inline-flex items-center justify-center w-6 h-6 transition-all duration-200 ease-in-out transform bg-white rounded-full shadow-sm top-1 left-1"
-                            :class="{ 'translate-x-0': billPlan == 'monthly', 'translate-x-8': billPlan == 'annually' }">
-                        </div>
-                    </button>
-                    <span class="text-base font-medium" :class="{ 'text-blue-500': billPlan == 'annually' }">1 An</span>
-                </div>
-
-                <!-- Plans -->
-                <div
-                    class="flex flex-col items-center justify-center mt-16 space-y-8 lg:flex-row lg:items-stretch lg:space-x-8 lg:space-y-0">
-                    <template x-for="(plan, i) in plans" x-key="i">
-                        <section class="flex flex-col w-full max-w-sm p-12 space-y-6 bg-white rounded-lg shadow-md">
-                            <!-- Price -->
-                            <div class="flex-shrink-0 text-center">
-                                <span class="text-8xl font-bold tracking-tight"
-                                    :class="plan.name == 'Devenir premium (1 mois)' ? 'text-blue-500' : ''"
-                                    x-text="`${billPlan == 'monthly' ? plan.price.monthly : plan.price.annually}`"></span>
-                                <span class="text-blue-500 text-2xl font-bold"
-                                    x-text="billPlan == 'monthly' ? '€TTC' : '€TTC'"></span>
-                            </div>
-
-                            <!--  -->
-                            <!-- <div class="flex-shrink-0 pb-2 space-y-2 border-b text-center">
-                                <h2 class="text-2xl font-normal" x-text="plan.name"></h2>
-                                <p class="text-sm text-gray-400" x-text="plan.discretion"></p>
-                            </div> -->
-
-                            <!-- Features -->
-                            <ul class="flex-1 space-y-4 ">
-                                <li class="border-b text-center text-2xl py-4">Visionner les tutoriels <br>
-                                    <span class="font-bold">en avance</span>
-                                </li>
-                                <li class="border-b text-center text-2xl py-4 ">Voir les vidéos
-                                    <br>
-                                    <a href="#"
-                                        class="transition ease-in-out delay-150 font-bold hover:text-blue-500">Premium</a>
-                                </li>
-                                <li class="border-b text-center text-2xl py-4">
-                                    <span class="font-bold">Télécharger</span><br>
-                                    les vidéos
-                                </li>
-
-                                <li class="border-b text-center text-2xl py-4">
-                                    <span class="font-bold">Télécharger</span><br>
-                                    les sources
-                                </li>
-
-                                <!-- <template x-for="(feature, i) in plan.features" x-key="i">
-                                    <li class="flex items-start justify-center">
-                                        <svg class="w-6 h-6 text-green-300" aria-hidden="true"
-                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd"
-                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-                                        <span class="ml-3 text-base font-medium" x-text="feature"></span>
-                                    </li>
-                                </template> -->
-                            </ul>
-
-                            <!-- Button -->
-                            <div class="flex-shrink-0 pt-4">
-                                <button
-                                    class="font-bold inline-flex items-center justify-center w-full max-w-xs px-4 py-2 transition-colors border rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
-                                    :class="plan.name == 'Devenir premium (1 mois)' ? 'bg-blue-500 text-white hover:bg-blue-600' : 'hover:bg-blue-500 hover:text-white'"
-                                    x-text="`${plan.name == 'Devenir premium (1 mois)' && billPlan == 'annually' ? 'Devenir premium (1 an)' : plan.name}`"></button>
-                            </div>
-                        </section>
-                    </template>
-                </div>
-            </main>
-
-            <!-- Author links -->
-            <!-- <div class="fixed flex items-center space-x-4 bottom-5 left-5">
-                <a href="https://github.com/Kamona-WD" target="_blank"
-                    class="transition-transform transform hover:scale-125">
-                    <span class="sr-only">Linkedin</span>
-                    <svg style="color: rgb(45, 110, 240);" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                        fill="currentColor" class="bi bi-linkedin w-8 h-8" viewBox="0 0 16 16">
-                        <path
-                            d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"
-                            fill="#2d6ef0"></path>
-                    </svg>
-                </a>
-
-                <a href="https://twitter.com/ak_kamona" target="_blank"
-                    class="transition-transform transform hover:scale-125">
-                    <span class="sr-only">Facebook</span>
-                    <svg style="color: rgb(19, 113, 236);" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                        fill="currentColor" class="bi bi-facebook w-8 h-8" viewBox="0 0 16 16">
-                        <path
-                            d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"
-                            fill="#1371ec"></path>
-                    </svg>
-                </a>
-
-                <a href="https://github.com/Kamona-WD" target="_blank"
-                    class="transition-transform transform hover:scale-125">
-                    <span class="sr-only">Youtube</span>
-                    <svg style="color: red" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                        fill="currentColor" class="bi bi-youtube w-8 h-8" viewBox="0 0 16 16">
-                        <path
-                            d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z"
-                            fill="red"></path>
-                    </svg>
-                </a>
-
-                <a href="https://github.com/Kamona-WD" target="_blank"
-                    class="transition-transform transform hover:scale-125">
-                    <span class="sr-only">Github</span>
-                    <svg aria-hidden="true" class="w-8 h-8 text-black" fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                            d="M12.026,2c-5.509,0-9.974,4.465-9.974,9.974c0,4.406,2.857,8.145,6.821,9.465 c0.499,0.09,0.679-0.217,0.679-0.481c0-0.237-0.008-0.865-0.011-1.696c-2.775,0.602-3.361-1.338-3.361-1.338 c-0.452-1.152-1.107-1.459-1.107-1.459c-0.905-0.619,0.069-0.605,0.069-0.605c1.002,0.07,1.527,1.028,1.527,1.028 c0.89,1.524,2.336,1.084,2.902,0.829c0.091-0.645,0.351-1.085,0.635-1.334c-2.214-0.251-4.542-1.107-4.542-4.93 c0-1.087,0.389-1.979,1.024-2.675c-0.101-0.253-0.446-1.268,0.099-2.64c0,0,0.837-0.269,2.742,1.021 c0.798-0.221,1.649-0.332,2.496-0.336c0.849,0.004,1.701,0.115,2.496,0.336c1.906-1.291,2.742-1.021,2.742-1.021 c0.545,1.372,0.203,2.387,0.099,2.64c0.64,0.696,1.024,1.587,1.024,2.675c0,3.833-2.33,4.675-4.552,4.922 c0.355,0.308,0.675,0.916,0.675,1.846c0,1.334-0.012,2.41-0.012,2.737c0,0.267,0.178,0.577,0.687,0.479 C19.146,20.115,22,16.379,22,11.974C22,6.465,17.535,2,12.026,2z">
-                        </path>
-                    </svg>
-                </a>
-            </div>
-        </div> -->
-
-
-        </div>
 
 
 

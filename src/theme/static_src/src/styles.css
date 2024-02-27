@@ -586,6 +586,57 @@ li.active a:hover{
   
 }
 
+.intro-premium-container{
+  margin: 8rem 0 6rem 0;
+  /* font-size: 4rem; */
+}
+
+.box-premium-container{
+  display: grid;
+  grid-template-columns: 45% 55%;
+}
+
+.box-premium-container .pourquoi-premium{
+  margin-top: 10rem;
+}
+
+
+@media screen and (max-width: 1040px) {
+  .box-premium-container{
+  display: flex;
+  flex-direction: column-reverse;
+  
+}
+
+.intro-premium-container{
+  text-align: center;
+}
+
+.box-premium-container .pourquoi-premium{
+  margin-top: 2rem;
+  text-align: center;
+}
+  
+}
+
+/*? Class Tag Message */
+li.success {
+    color: green;
+}
+
+li.error {
+    color: red;
+}
+
+
+/* ! Mon Chat Bot */
+.container-chat-bot{
+  height: 40px;
+  width: 60px;
+  background-color: red;
+  border-top-left-radius : 50%;
+  border-bottom-left-radius : 50%;
+}
 /* .compte-container-infos button{
   cursor: pointer;
 } */

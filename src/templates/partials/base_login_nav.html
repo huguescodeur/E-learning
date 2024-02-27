@@ -38,6 +38,9 @@
         <!-- <li class="{% if current_view_name == 'blog' %}active{% endif %}"><a
                 class="text-sm text-gray-400 hover:text-gray-500" href="{% url 'blog' %}">Blog</a></li> -->
 
+        <!-- <li class="{% if current_view_name == 'premium' %}active{% endif %}"><a
+                class="text-sm text-gray-400 hover:text-gray-500  " href="{% url 'premium' %}">Premium</a></li> -->
+
         <li class="{% if current_view_name == 'contact' %}active{% endif %}"><a
                 class="text-sm text-gray-400 hover:text-gray-500" href="{% url 'contact' %}">Contact</a></li>
 
@@ -120,6 +123,8 @@
                     <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
                         href="{% url 'blog' %}">Blog</a>
                 </li> -->
+                <!-- <li class="{% if current_view_name == 'premium' %}active{% endif %}"><a
+                        class="text-sm text-gray-400 hover:text-gray-500  " href="{% url 'premium' %}">Premium</a></li> -->
                 <li class="mb-1 {% if current_view_name == 'contact' %}active{% endif %}">
                     <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
                         href="{% url 'contact' %}">Contact</a>
