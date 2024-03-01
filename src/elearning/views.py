@@ -20,7 +20,7 @@ def convert_microseconds_to_time(microseconds):
 # ? Accueil
 def index_view(request):
     user_id = request.session.get('user_id', None)
-
+    user = None
     current_view_name = request.resolver_match.url_name
     context = {'title': 'Accueil', 'current_view_name': current_view_name}
 

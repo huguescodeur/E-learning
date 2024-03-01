@@ -13,11 +13,15 @@ from datetime import datetime
 from django.contrib.auth import logout
 from django.urls import reverse
 from django.utils import timezone
-from django.http import JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+import uuid
+import jwt
+import datetime
+import secrets
 
 
 # Logique du décirateur
@@ -350,7 +354,7 @@ def envoie_message_view(request):
                     return redirect("contact")
 
         elif user_id is None:
-            sender_email = "@m"
+            sender_email = "goliyao09@gmail.com"
             receiver_email = "@m"
             password = "a"
 
@@ -371,3 +375,107 @@ def envoie_message_view(request):
                 return redirect("contact")
     else:
         return redirect("contact")
+
+
+# ? Forgot password
+def forgot_password_view(request):
+    current_view_name = request.resolver_match.url_name
+    context = {'title': 'Password', 'current_view_name': current_view_name}
+
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        user_password = ""
+        user_name = ""
+
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT nom, password FROM account_user WHERE email = %s", [
+                email])
+
+            user = cursor.fetchone()
+
+        print(user)
+
+        if user is not None:
+            user_name = user[0]
+            user_password = user[1]
+
+            # Générer un jeton unique
+            # token = uuid.uuid4().hex
+            secret = secrets.token_hex(32)
+            print(secret)
+            token = jwt.encode({
+                'email': email,
+                'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
+            }, secret, algorithm='HS256')
+
+            print(token)
+
+            sender_email = "goliyao09@gmail.com"
+            receiver_email = email
+            password = "dqtylrxcwoflitis"
+
+            reset_link = request.build_absolute_uri(
+                reverse('reset_password')) + '?token=' + token
+
+            # Créer le message
+            message = f"Bonjour {user_name},\n\nPour réinitialiser votre mot de passe, veuillez cliquer sur le lien suivant :\n{
+                reset_link}\n\nCordialement,\nL'équipe"
+
+            send_email(sender_email, receiver_email,
+                       password, user_name, email, message, request)
+
+            return redirect("connexion")
+
+        else:
+            messages.error(
+                request, "Erreur d'envoie . Vérifiez votre adresse e-mail ")
+            return redirect("password_reset")
+
+    return render(request, "forgot_password.html", context)
+
+
+# ? Password Reset
+def reset_password_view(request):
+    token = request.GET.get('token')
+    print(token)
+
+    current_view_name = request.resolver_match.url_name
+    context = {'title': 'Nouveau password',
+               'current_view_name': current_view_name,
+               'token': token
+               }
+
+    if request.method == 'POST':
+        new_password = request.POST.get('new-password')
+        confirm_password = request.POST.get('confirm-password')
+        token = request.POST.get('token')
+
+        if new_password != confirm_password:
+            print("Different")
+            messages.error(request, "Les mots de passe ne correspondent pas.")
+            # return redirect('reset_password', token=token)
+            return HttpResponseRedirect(reverse('reset_password') + '?token=' + token)
+
+        try:
+            payload = jwt.decode(token, 'secret', algorithms=['HS256'])
+            email = payload['email']
+
+            print(f"Mon email: {email}")
+
+            with connection.cursor() as cursor:
+                hashed_password = make_password(new_password)
+                cursor.execute("UPDATE account_user SET password = %s WHERE email = %s", [
+                    hashed_password, email])
+
+            messages.success(
+                request, "Votre mot de passe a été réinitialisé avec succès.")
+
+            return redirect('connexion')
+
+        except (jwt.ExpiredSignatureError, jwt.DecodeError):
+            messages.error(
+                request, "Le lien de réinitialisation du mot de passe est invalide ou a expiré.")
+
+            return redirect("password_reset")
+
+    return render(request, "reset_password.html", context)

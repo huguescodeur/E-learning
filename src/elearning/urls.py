@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from . import views
-from account.views import connexion_view, inscription_view, logout_view, settings_view, update_user_info_view, update_image_view, delete_account_view, premium_account_view, envoie_message_view
+from account.views import connexion_view, inscription_view, logout_view, settings_view, update_user_info_view, update_image_view, delete_account_view, premium_account_view, envoie_message_view, forgot_password_view, reset_password_view
 from django.conf import settings
 from django.conf.urls.static import static
 from videos.views import formations_view, playlist_formations_view, tutoriels_view, playlist_tutorial_view, search_suggestions_formations
@@ -47,6 +47,9 @@ urlpatterns = [
     path('delete_account/', delete_account_view, name='delete_account'),
     path('premium/', premium_account_view, name='premium'),
     path('envoie_message/', envoie_message_view, name='envoie_message'),
+    path('password/', forgot_password_view, name='password_reset'),
+    path('reset_password/',
+         reset_password_view, name='reset_password'),
 
 ]
 

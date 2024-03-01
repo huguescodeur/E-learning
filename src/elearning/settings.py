@@ -26,7 +26,9 @@ SECRET_KEY = 'django-insecure-=_pzkx5k80+25sp4=i*%netd=semvimp3#%_yk712fgz$scn*9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '.vercel.app'
+]
 
 
 # Application definition
@@ -160,11 +162,6 @@ INTERNAL_IPS = [
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-<<<<<<< HEAD
-<<<<<<< 77dead05eba6a88dd783ad7a3526e7145d1435c8
-=======
-=======
->>>>>>> a0ad5b9a22ab1d8800f98276b4491b149d9cc17d
 
 
 EMAIL_BACKEND = 'djando.core.mail.backends.smtp.EmailBackend'
@@ -174,7 +171,3 @@ EMAIL_HOST_USER = 'a'
 EMAIL_HOST_PASSWORD = 'a'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
-<<<<<<< HEAD
->>>>>>> Suppression infos!
-=======
->>>>>>> a0ad5b9a22ab1d8800f98276b4491b149d9cc17d

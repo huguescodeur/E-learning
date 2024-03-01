@@ -628,6 +628,16 @@ li.error {
     color: red;
 }
 
+/* ! Forgot Password */
+.section-forgot-password{
+  border-left: none;
+  border-right: none;
+}
+
+.container-form-forgot-password{
+  height: 250px;
+}
+
 
 /* ! Mon Chat Bot */
 .container-chat-bot{
