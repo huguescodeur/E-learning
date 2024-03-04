@@ -312,6 +312,7 @@ def send_email(sender_email, receiver_email, password, name, email, message_text
         messages.error(
             request, "Erreur d'authentification . Vérifiez votre adresse e-mail et votre mot de passe.")
     except Exception as e:
+        print(f"Erreur:{e}")
         messages.error(
             request, f"Une erreur s'est produite lors de l'envoi de l'e-mail : {e}")
 
@@ -332,9 +333,9 @@ def envoie_message_view(request):
                 user = cursor.fetchone()
 
                 # Envoyer un email
-                sender_email = "goliyao09@gmail.com"
-                receiver_email = "huguescodeur@gmail.com"
-                password = "dqtylrxcwoflitis"
+                sender_email = os.environ.get('EMAIL_HOST_SENDER')
+                receiver_email = os.environ.get('EMAIL_HOST_RECEIVER')
+                password = os.environ.get('EMAIL_HOST_PASSWORD')
 
                 send_email(sender_email, receiver_email,
                            password, name, email, message_text, request)
@@ -354,9 +355,9 @@ def envoie_message_view(request):
                     return redirect("contact")
 
         elif user_id is None:
-            sender_email = "@"
-            receiver_email = "@"
-            password = "@"
+            sender_email = os.environ.get('EMAIL_HOST_SENDER')
+            receiver_email = os.environ.get('EMAIL_HOST_RECEIVER')
+            password = os.environ.get('EMAIL_HOST_PASSWORD')
 
             send_email(sender_email, receiver_email,
                        password, name, email, message_text, request)
@@ -405,14 +406,14 @@ def forgot_password_view(request):
             print(secret)
             token = jwt.encode({
                 'email': email,
-                'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
+                'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=10)
             }, secret, algorithm='HS256')
 
             print(token)
 
-            sender_email = "goliyao09@gmail.com"
+            sender_email = os.environ.get('EMAIL_HOST_SENDER')
             receiver_email = email
-            password = "dqtylrxcwoflitis"
+            password = os.environ.get('EMAIL_HOST_PASSWORD')
 
             reset_link = request.build_absolute_uri(
                 reverse('reset_password')) + '?token=' + token
