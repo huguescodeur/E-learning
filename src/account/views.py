@@ -354,9 +354,9 @@ def envoie_message_view(request):
                     return redirect("contact")
 
         elif user_id is None:
-            sender_email = "goliyao09@gmail.com"
-            receiver_email = "@m"
-            password = "a"
+            sender_email = "@"
+            receiver_email = "@"
+            password = "@"
 
             send_email(sender_email, receiver_email,
                        password, name, email, message_text, request)
