@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name='videos',
+            model_name='videos_root',
             name='niveau',
             field=models.CharField(default='debutant', max_length=30),
         ),

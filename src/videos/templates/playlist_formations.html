@@ -85,12 +85,12 @@
             if (match_video.access === 'premium' && !is_premium) {
 
                 document.getElementById('premium-popup').style.display = 'block';
-                document.getElementById('main-video').src = ""; // Ne pas définir la source de la vidéo
-                document.getElementById('main-video').controls = false; // Désactiver les contrôles
+                document.getElementById('main-video').src = "";
+                document.getElementById('main-video').controls = false;
             } else {
                 document.getElementById('premium-popup').style.display = 'none';
-                document.getElementById('main-video').src = "{% static 'medias/videos/' %}" + match_video.name; // Mettre à jour la source de la vidéo à la vidéo sélectionnée
-                document.getElementById('main-video').controls = true; // Activer les contrôles
+                document.getElementById('main-video').src = "{% static 'medias/videos/' %}" + match_video.name;
+                document.getElementById('main-video').controls = true;
             }
 
 

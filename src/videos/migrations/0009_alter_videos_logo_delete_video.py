@@ -11,9 +11,9 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name='videos',
+            model_name='videos_root',
             name='logo',
-            field=models.ImageField(default='videos/static/medias/logo/default_logo.png', upload_to='videos/static/medias/logo/'),
+            field=models.ImageField(default='videos_root/static/medias/logo/default_logo.png', upload_to='videos_root/static/medias/logo/'),
         ),
 
     ]

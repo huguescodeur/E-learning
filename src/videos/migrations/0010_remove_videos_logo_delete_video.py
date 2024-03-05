@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RemoveField(
-            model_name='videos',
+            model_name='videos_root',
             name='logo',
         ),
 

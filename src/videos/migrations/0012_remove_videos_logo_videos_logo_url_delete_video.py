@@ -11,13 +11,13 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RemoveField(
-            model_name='videos',
+            model_name='videos_root',
             name='logo',
         ),
         migrations.AddField(
-            model_name='videos',
+            model_name='videos_root',
             name='logo_url',
-            field=models.CharField(default='videos/static/medias/logo/python.png', max_length=50),
+            field=models.CharField(default='videos_root/static/medias/logo/python.png', max_length=50),
         ),
 
     ]

@@ -51,7 +51,7 @@ def formations_view(request):
             'account/static/', '')
 
     all_formation = [
-        (course, course_description, logo_url.replace('videos/static/', ''), convert_microseconds_to_time(duration),
+        (course, course_description, logo_url.replace('videos_root/static/', ''), convert_microseconds_to_time(duration),
          title, count)
         for course, course_description, logo_url, duration, title, count in
         all_formation]
@@ -94,9 +94,9 @@ def playlist_formations_view(request, course, selected_slug=None):
         {
             'id': str(index),
             'title': video[0],
-            'name': video[1].replace('videos/static/medias/videos/', ''),
+            'name': video[1].replace('videos_root/static/medias/videos_root/', ''),
             'duration': str(video[3] // 60000000) + ':' + str((video[3] // 1000000) % 60).zfill(2),
-            'thumbnail': video[4].replace('videos/static/', ''),
+            'thumbnail': video[4].replace('videos_root/static/', ''),
             'access': video[5],
             'slug': video[6]
         }
@@ -161,7 +161,7 @@ def tutoriels_view(request):
             'account/static/', '')
 
     all_tutorial = [
-        (title, description, logo_url.replace('videos/static/', ''), convert_microseconds_to_time(duration),
+        (title, description, logo_url.replace('videos_root/static/', ''), convert_microseconds_to_time(duration),
          niveau.capitalize(), course, slug)
         for title, description, logo_url, duration, niveau, course, slug in
         all_tutorial]
@@ -207,15 +207,15 @@ def playlist_tutorial_view(request, course, selected_slug):
     context["total_lessons"] = len(tutoriels_videos)
     # context["course_title"] = course
 
-    # context['thumbnail']: miniature.replace('videos/static/medias/miniatures/', '')
+    # context['thumbnail']: miniature.replace('videos_root/static/medias/miniatures/', '')
 
     tutoriel_videos = [
         {
             'id': str(index),
             'title': video[0],
-            'name': video[1].replace('videos/static/medias/videos/', ''),
+            'name': video[1].replace('videos_root/static/medias/videos_root/', ''),
             'duration': str(video[3] // 60000000) + ':' + str((video[3] // 1000000) % 60).zfill(2),
-            'thumbnail': video[4].replace('videos/static/', ''),
+            'thumbnail': video[4].replace('videos_root/static/', ''),
             'access': video[5],
             'slug': video[6]
         }

@@ -11,19 +11,19 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name='videos',
+            model_name='videos_root',
             name='course',
             field=models.CharField(default='Lesson', max_length=255),
         ),
         migrations.AlterField(
-            model_name='videos',
+            model_name='videos_root',
             name='miniature',
-            field=models.ImageField(default='videos/static/medias/miniatures/default_image.png', upload_to='videos/static/medias/miniatures/'),
+            field=models.ImageField(default='videos_root/static/medias/miniatures/default_image.png', upload_to='videos_root/static/medias/miniatures/'),
         ),
         migrations.AlterField(
-            model_name='videos',
+            model_name='videos_root',
             name='video_file',
-            field=models.FileField(upload_to='videos/static/medias/videos/'),
+            field=models.FileField(upload_to='videos_root/static/medias/videos_root/'),
         ),
 
     ]

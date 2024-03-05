@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name='videos',
+            model_name='videos_root',
             name='author',
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='account.formateur'),
         ),

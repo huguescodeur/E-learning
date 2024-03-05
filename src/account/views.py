@@ -82,9 +82,9 @@ def inscription_view(request):
         password = request.POST.get('password')
         confirmpassword = request.POST.get('confirmpassword')
         role = request.POST.get('role', 'apprenant')
-        default_image = "account/static/images/user_profil/default_image.png"
+        default_image = "account/static/images_root/user_profil/default_image.png"
 
-        # default_image = 'account/static/images/default.jpg'
+        # default_image = 'account/static/images_root/default.jpg'
 
         # ? Password pareil??
         if password != confirmpassword:
@@ -238,7 +238,7 @@ def update_image_view(request):
     if request.method == 'POST':
         image_data = request.FILES['new-image']
         file_name = "{}_{}".format(user[12], image_data.name.replace(' ', '_'))
-        file_path = "account/static/images/user_profil/{}".format(file_name)
+        file_path = "account/static/images_root/user_profil/{}".format(file_name)
 
         with open(file_path, 'wb+') as destination:
             for chunk in image_data.chunks():

@@ -57,13 +57,13 @@ def index_view(request):
             'account/static/', '')
 
     all_formation = [
-        (course, course_description, logo_url.replace('videos/static/', ''),
+        (course, course_description, logo_url.replace('videos_root/static/', ''),
          convert_microseconds_to_time(duration), title, count, slug)
         for course, course_description, logo_url, duration, title, count, slug in
         all_formation]
 
     all_tutorial = [
-        (title, description, logo_url.replace('videos/static/', ''), convert_microseconds_to_time(duration),
+        (title, description, logo_url.replace('videos_root/static/', ''), convert_microseconds_to_time(duration),
          niveau.capitalize(), course, slug)
         for title, description, logo_url, duration, niveau, course, slug in
         all_tutorial]
